@@ -3,6 +3,8 @@ import requests, openpyxl
 import pandas as pd
 import re
 
+with open('path.txt', 'r') as file:
+    path = file.readline().strip()
 
 def check(link, currentQ, lastQ):    
     try:
@@ -90,7 +92,7 @@ def send_email(email_id, xl_data, xl_old_data):
 
 if __name__ == '__main__':
 
-    xl_data = pd.read_excel('DateCheck.xlsx', sheet_name="Sheet1")  #read excel
+    xl_data = pd.read_excel(path, sheet_name="Sheet1")  #read excel
     xl_old_data = xl_data
 
     for i in range(0,len(xl_data)):
@@ -102,10 +104,10 @@ if __name__ == '__main__':
         lastQ = str(xl_data.LastQ[i])
 
         if (((current_result == "Negative") or  (current_result == "Error")) and (currentQ != 'nan')):
-            result = check(link, name, currentQ, lastQ)
+            result = check(link, currentQ, lastQ)
             xl_data.at[i,'Result']=result
 
-    xl_data.to_excel(r'DateCheck.xlsx', sheet_name='Sheet1', index=False)  #Write excel      
+    xl_data.to_excel(path, sheet_name='Sheet1', index=False)  #Write excel      
 
     emails = xl_data["Email"].unique().tolist()
 

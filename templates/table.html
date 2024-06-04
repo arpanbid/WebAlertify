@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <style type="text/css">
+        table.data {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Table:</h3>
+
+{% for table in tables %}
+    {{ table|safe }}
+{% endfor %}
+
+<form action="/handle_form" method="POST">
+    <h3>Add New Link</h3>
+    
+    <div>
+        <label for="link">Link:</label>
+        <input type="text" id="link" name="link" value="https://">
+    </div>
+    
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="">
+    </div>
+
+    <div>
+        <label for="currentQ">Search String - Current Quarter:</label>
+        <input type="text" id="currentQ" name="currentQ" value="">
+    </div>
+
+    <div>
+        <label for="lastQ">Search String - Last Quarter:</label>
+        <input type="text" id="lastQ" name="lastQ" value="">
+    </div>
+
+    <div>
+        <label for="email">Email ID:</label>
+        <input type="text" id="email" name="email" value="">
+    </div>
+    
+    <button type="submit" name="action" value="check_link">Check Link</button>
+    <button type="submit" name="action" value="Add">Add</button>
+    
+    <h3>Delete Link: </h3>
+    <div>
+        <label for="dropdown">Select row to delete:</label>
+        <select id="dropdown" name="dropdown">
+            {% for option_value, option_text in dropdown_options %}
+                <option value="{{ option_value }}" {% if option_value == dropdown %}selected{% endif %}>{{ option_text }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" name="action" value="delete">delete</button>
+
+</form>
+
+</body>
+</html>
