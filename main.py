@@ -83,7 +83,7 @@ def send_email(email_id, xl_data, xl_old_data):
 
     msg.set_content(message)
     print(message)
-    s.send_message(msg)
+    #s.send_message(msg)            # Uncheck this before using this to email contacts
     s.quit()
 
 
