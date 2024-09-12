@@ -19,28 +19,31 @@ def check(link, currentQ, lastQ):
         #from selenium import webdriver
         
         #Using Chrome on EC2
-        # with open('chrome_path') as f:
-        #     lines = f.readlines()
+        #with open('chrome_path.txt') as f:
+        #    lines = f.readlines()
+            
         #from selenium.webdriver.chrome.service import Service as ChromeService
         #from selenium.webdriver.chrome.options import Options
-        #chromedriver_path = lines[0]
+        #chromedriver_path = lines[0].strip()
+        #custom_user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'
         #chrome_options = Options()
-        #chrome_options.binary_location = lines[1]
+        #chrome_options.binary_location = lines[1].strip()
+        #chrome_options.add_argument(f'user-agent={custom_user_agent}')
         #chrome_options.add_argument('--headless')
-        # chrome_options.add_argument('--disable-gpu')
+        #chrome_options.add_argument('--disable-gpu')
         # chrome_options.add_argument('--no-sandbox')  # Required for certain Linux environments
         # chrome_options.add_argument('--disable-dev-shm-usage')  # Prevents shared memory issues
-        #service = ChromeService(executable_path=chromedriver_path)
-        #driver = webdriver.Chrome(service=service, options=chrome_options)
+        # service = ChromeService(executable_path=chromedriver_path)
+        # driver = webdriver.Chrome(service=service, options=chrome_options)
 
         #Using Edge on Win11 
         #edge_options = webdriver.EdgeOptions()
         #edge_options.add_argument('headless')
         #driver = webdriver.Edge(options=edge_options)
         
-        #driver.get(link)
-        #sleep(5)
-        #soup = BeautifulSoup(driver.page_source,'html.parser')
+        # driver.get(link)
+        # sleep(5)
+        # soup = BeautifulSoup(driver.page_source,'html.parser')
 
 
 
@@ -126,9 +129,11 @@ if __name__ == '__main__':
         currentQ = str(xl_data.CurrentQ[i])
         lastQ = str(xl_data.LastQ[i])
 
-        if (((current_result == "Negative") or  (current_result == "Error")) and (currentQ != 'nan')):
+        if ((((current_result == "Negative") or  (current_result == "FetchingError")) or (current_result == "Error") ) and (currentQ != 'nan')):
             result = check(link, currentQ, lastQ)
             xl_data.at[i,'Result']=result
+        else:
+            print("Not Checking:" + name )
 
     xl_data.to_excel(path, sheet_name='Sheet1', index=False)  #Write excel      
 
