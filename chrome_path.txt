@@ -1,0 +1,2 @@
+/home/ubuntu/MyApps/PeopleStrongPunchInOut/ChromeDriver/chromedriver-linux64/chromedriver
+/usr/bin/google-chrome

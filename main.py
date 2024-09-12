@@ -9,12 +9,31 @@ with open('path.txt', 'r') as file:
 def check(link, currentQ, lastQ):    
     try:
         headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+        
+        #using requests and beautifulsoup
         source = requests.get(link, headers=headers)
         soup = BeautifulSoup(source.text,'html.parser')
 
+        #Using Selenium
         #from time import sleep
         #from selenium import webdriver
         
+        #Using Chrome on EC2
+        # with open('chrome_path') as f:
+        #     lines = f.readlines()
+        #from selenium.webdriver.chrome.service import Service as ChromeService
+        #from selenium.webdriver.chrome.options import Options
+        #chromedriver_path = lines[0]
+        #chrome_options = Options()
+        #chrome_options.binary_location = lines[1]
+        #chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--disable-gpu')
+        # chrome_options.add_argument('--no-sandbox')  # Required for certain Linux environments
+        # chrome_options.add_argument('--disable-dev-shm-usage')  # Prevents shared memory issues
+        #service = ChromeService(executable_path=chromedriver_path)
+        #driver = webdriver.Chrome(service=service, options=chrome_options)
+
+        #Using Edge on Win11 
         #edge_options = webdriver.EdgeOptions()
         #edge_options.add_argument('headless')
         #driver = webdriver.Edge(options=edge_options)
@@ -22,6 +41,10 @@ def check(link, currentQ, lastQ):
         #driver.get(link)
         #sleep(5)
         #soup = BeautifulSoup(driver.page_source,'html.parser')
+
+
+
+
 
         p = soup.find_all(string= re.compile(str(lastQ)))
         c = soup.find_all(string= re.compile(currentQ))
