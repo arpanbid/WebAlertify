@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
+    <title>WebAlertify - Dashboard</title>
     <style type="text/css">
         table.data {
             border-collapse: collapse;
@@ -19,7 +19,8 @@
 </head>
 <body>
 
-    <h2>Welcome WebAlertify</h2>
+    <h1>WebAlertify</h1>
+    <h2>Welcome {{username}}</h2>
     <h3>Table:</h3>
 
 {% for table in tables %}
@@ -50,8 +51,7 @@
     </div>
 
     <div>
-        <label for="email">Email ID:</label>
-        <input type="text" id="email" name="email" value="">
+        <label for="email">Email ID: {{emailid}}</label>
     </div>
     
     <button type="submit" name="action" value="check_link">Check Link</button>

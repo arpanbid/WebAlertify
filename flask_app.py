@@ -25,9 +25,9 @@ def read_user_credentials():
     with open('Data/users.csv', mode='r', newline='') as file:
         reader = csv.reader(file)
         for row in reader:
-            if len(row) == 2:  # Ensure there are two elements in the row
-                username, password = row
-                users[username] = {'username': username, 'password': generate_password_hash(password)}
+            if len(row) == 3:  # Ensure there are three elements in the row
+                emailid ,username, password = row
+                users[username] = {'emailid': emailid, 'username': username, 'password': generate_password_hash(password)}
     
 
 
@@ -42,7 +42,7 @@ def is_authenticated(username, password):
 def home():
     if 'username' in session:
         return f'Hello, {session["username"]}! <a href="/dashboard">Dashboard</a> | <a href="/logout">Logout</a>'
-    return 'Welcome! Please <a href="/login">login</a>.'
+    return '<h1>WebAlertify</h1> Please <a href="/login">login</a>.'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -65,12 +65,13 @@ def logout():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        email_id = request.form['emailid']
         username = request.form['username']
         password = request.form['password']
 
         with open('Data/users.csv', mode='a', newline='') as file:  #save user credentials in a csv file
             writer = csv.writer(file)
-            writer.writerow([username, password])
+            writer.writerow([email_id, username, password])
         
         return 'Registration Success. <a href="/login">Login</a>'  #success page after registration
     return render_template('signup.html')
@@ -79,12 +80,14 @@ def signup():
 def index():
     if 'username' in session:
         global xl_data
+        global users
         xl_data = pd.read_excel(path, sheet_name="Sheet1")  #read excel
-        unique_index = xl_data.iloc[:, 0].tolist()
+        filtered_xl_data = xl_data[xl_data['Email'] == users[session['username']]["emailid"]]  #filters those rows belong to the email of current session
+        unique_index = filtered_xl_data.iloc[:, 0].tolist()
         dropdown_options=[]
         for item in unique_index:
             dropdown_options.append((item, item))
-        return render_template('table.html', tables=[xl_data.to_html(classes='data')], titles=xl_data.columns.values, dropdown_options = dropdown_options)
+        return render_template('table.html', tables=[filtered_xl_data.to_html(classes='data')], titles=filtered_xl_data.columns.values, dropdown_options = dropdown_options, username = session['username'], emailid = users[session['username']]["emailid"])
     return render_template('login.html')
 
 @app.route('/checklink')
@@ -96,17 +99,17 @@ def checklink():
 
 @app.route('/add')
 def add():
-    new_row = {"Link":link, "Name":name, "CurrentQ":currentQ ,"LastQ":lastQ, "Result":"Negative", "Email":email }
+    new_row = {"Link":link, "Name":name, "CurrentQ":currentQ ,"LastQ":lastQ, "Result":"Negative", "Email": users[session['username']]["emailid"]}
     xl_data.loc[len(xl_data)] = new_row
     xl_data.to_excel(path, sheet_name="Sheet1", index=False)
-    return "Added " + name
+    return "Added " + name 
 
 @app.route('/delete')
 def delete():
     global xl_data
     xl_data = xl_data[xl_data["Link"] != delete_row]
     xl_data.to_excel(path, sheet_name="Sheet1", index=False)
-    return "Deleted " + delete_row
+    return "Deleted " + delete_row 
 
 @app.route('/handle_form', methods=['POST'])
 def handle_form():

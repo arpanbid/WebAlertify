@@ -1,3 +1,5 @@
 pass.txt
 __pycache__
 .env
+*/.env
+env/
