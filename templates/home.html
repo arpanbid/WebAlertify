@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAlertify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            line-height: 1.5;
+        }
+        .login-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #2ce4e4;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .login-button:hover {
+            background-color: #187777;
+        }
+        .logo {
+            max-width: 70%;
+            height: auto;
+            margin: 20px 0;
+        }
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 14px;
+            }
+            .login-button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo -->
+        <a href="/dashboard">
+            <img src="{{ url_for('static', filename='img/WA.png') }}" alt="App Logo" class="logo" style="width: auto; height: auto;">
+        </a>
+        
+       
+
+        <h1>Welcome</h1>
+        <p>
+            WebAlertify.com—your go-to solution for monitoring the web for critical information. Whether you are tracking specific keywords on websites or want to be the first to know when something important appears, WebAlertify has you covered.
+        </p>    
+            <h2>How It Works</h2>
+        <p>    
+            WebAlertify allows you to set up alerts for any keyword on any website. Our app continuously monitors the websites you specify at regular intervals. As soon as your chosen keyword appears, we will send you an instant notification via email, so you are always in the know.
+            Currently, WebAlertify is scheduled to run daily from Monday to Friday at 10 AM IST. Users can anticipate receiving their email notifications around that time.
+        </p>
+        <p> 
+            For detailed instructions on how to use WebAlertify, please <a href="/steps" target="_blank">click here</a>.    
+        </p>
+        <a href="/login" class="login-button">Login</a> 
+    </div>
+
+</body>
+</html>

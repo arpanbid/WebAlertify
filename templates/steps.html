@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use WebAlertify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        strong {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        li {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .steps {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .logo {
+            max-width: 50%;
+            height: auto;
+            margin: 20px 0;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 14px;
+            }
+            .login-button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="/dashboard">
+            <img src="{{ url_for('static', filename='img/WA.png') }}" alt="App Logo" class="logo" style="width: auto; height: auto;">
+        </a>
+        <h1>How to Use WebAlertify</h1>
+
+        <h2>1. Visit the Website</h2>
+        <p>Go to <a href="https://webalertify.com">WebAlertify.com</a>.</p>
+
+        <h2>2. Login or Signup</h2>
+        <ul class="steps">
+            <li>If you're a registered user, log in with your <strong>username</strong> and <strong>password</strong>.</li>
+            <li>If you're a new user, sign up with your <strong>email ID</strong>, <strong>username</strong>, and <strong>password</strong>.</li>
+            <li><strong>Note:</strong> The username and email must be unique. You cannot reuse already registered usernames or emails.</li>
+        </ul>
+
+        <h2>3. Access the Main Dashboard</h2>
+        <p>Once logged in, you’ll be taken to the main dashboard where you can manage your alerts.</p>
+
+        <h2>4. Add a New Link for Monitoring</h2>
+        <ul class="steps">
+            <li>Go to the <strong>Add Link</strong> section.</li>
+            <li>Fill in the form with the following details:
+                <ul>
+                    <li><strong>Web link:</strong> The URL you want to monitor.</li>
+                    <li><strong>Link Name:</strong> A name for this link.</li>
+                    <li><strong>Search Keyword:</strong> The keyword you wish to track on the page.</li>
+                    <li><strong>Available Keyword:</strong> A keyword that’s already present on the page, ensuring the app can access it.</li>
+                </ul>
+            </li>
+            <li>Click <strong>Check Link</strong> to see the status:
+                <ul>
+                    <li><strong>Positive:</strong> The search keyword is available on the website.</li>
+                    <li><strong>Negative:</strong> The search keyword is not found, but the available keyword is, meaning the app will continue checking the page.</li>
+                    <li><strong>Error:</strong> The page couldn’t be read. This might happen due to restrictions or CAPTCHA on the site.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>5. Add the Link</h2>
+        <p>Once the link is checked, go back and click <strong>Add Link</strong>. The link will now be visible on your dashboard.</p>
+
+        <h2>6. Delete a Link</h2>
+        <p>To stop monitoring a link, go to the <strong>Delete Link</strong> section and remove it from the dashboard.</p>
+
+        <h2>7. Automated Monitoring</h2>
+        <p>The app will automatically check your links every day at <strong>10 AM IST</strong>. If your search keyword is found, you’ll receive an email notification.</p>
+
+        <h2>8. Log Out</h2>
+        <p>Please remember to <strong>Log Out</strong> once you have completed your task.</p>
+
+
+
+        <!--
+        <div class="footer">
+            &copy; 2024 WebAlertify. All Rights Reserved.
+        </div>
+        -->
+    </div>
+
+</body>
+</html>

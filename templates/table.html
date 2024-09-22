@@ -7,6 +7,10 @@
             border-collapse: collapse;
             width: 100%;
         }
+        table.data td:nth-child(1),
+        table.data th:nth-child(1) {
+            display: none; /* Hides the first column */
+        }
         th, td {
             border: 1px solid black;
             padding: 8px;
@@ -15,20 +19,35 @@
         th {
             background-color: #f2f2f2;
         }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 5;
+            padding: 5;
+            text-align: left;
+        }
+        .logo {
+            max-width: 20%;
+            height: auto;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
 
-    <h1>WebAlertify</h1>
+    <a href="/dashboard">
+        <img src="{{ url_for('static', filename='img/WA.png') }}" alt="App Logo" class="logo" style="width: auto; height: auto;">
+    </a>
+
     <h2>Welcome {{username}}</h2>
-    <h3>Table:</h3>
+    <h3>{{table_length}} links available:</h3>
 
 {% for table in tables %}
     {{ table|safe }}
 {% endfor %}
 
 <form action="/handle_form" method="POST">
-    <h3>Add New Link</h3>
+    <h3>Add New Link:</h3>
     
     <div>
         <label for="link">Link:</label>
@@ -41,12 +60,12 @@
     </div>
 
     <div>
-        <label for="currentQ">Search String - Current Quarter:</label>
+        <label for="currentQ">Search String:</label>
         <input type="text" id="currentQ" name="currentQ" value="">
     </div>
 
     <div>
-        <label for="lastQ">Search String - Last Quarter:</label>
+        <label for="lastQ">Available String:</label>
         <input type="text" id="lastQ" name="lastQ" value="">
     </div>
 
@@ -66,10 +85,14 @@
             {% endfor %}
         </select>
     </div>
-    <button type="submit" name="action" value="delete">delete</button>
+    <button type="submit" name="action" value="delete">Delete</button>
 
 </form>
-
+<br>
+<p> 
+    For detailed instructions on how to use WebAlertify, please <a href="/steps" target="_blank">click here</a>.    
+</p>
+<br>
 <a href="/logout">Logout</a>
 </body>
 </html>
