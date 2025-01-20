@@ -1,8 +1,12 @@
 from bs4 import BeautifulSoup
-import requests, openpyxl
+#import requests, openpyxl
 import pandas as pd
 import re
-
+from config import *
+from time import sleep
+from selenium import webdriver 
+from selenium.webdriver.edge.service import Service
+        
 with open('path.txt', 'r') as file:
     path = file.readline().strip()
 
@@ -13,33 +17,30 @@ def check(link, currentQ, lastQ):
         #using requests and beautifulsoup
         #source = requests.get(link, headers=headers)
         #soup = BeautifulSoup(source.text,'html.parser')
-
-        #Using Selenium
-        from time import sleep
-        from selenium import webdriver
         
         #Using Chrome on EC2
-        with open('chrome_path.txt') as f:
-           lines = f.readlines()
+        #with open('chrome_path.txt') as f:
+        #   lines = f.readlines()
             
-        from selenium.webdriver.chrome.service import Service as ChromeService
-        from selenium.webdriver.chrome.options import Options
-        chromedriver_path = lines[0].strip()
+        # from selenium.webdriver.chrome.service import Service as ChromeService
+        # from selenium.webdriver.chrome.options import Options
+        # chromedriver_path = lines[0].strip()
         custom_user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'
-        chrome_options = Options()
-        chrome_options.binary_location = lines[1].strip()
-        chrome_options.add_argument(f'user-agent={custom_user_agent}')
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')  # Required for certain Linux environments
-        chrome_options.add_argument('--disable-dev-shm-usage')  # Prevents shared memory issues
-        service = ChromeService(executable_path=chromedriver_path)
-        driver = webdriver.Chrome(service=service, options=chrome_options)
+        # chrome_options = Options()
+        # chrome_options.binary_location = lines[1].strip()
+        # chrome_options.add_argument(f'user-agent={custom_user_agent}')
+        # chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--disable-gpu')
+        # chrome_options.add_argument('--no-sandbox')  # Required for certain Linux environments
+        # chrome_options.add_argument('--disable-dev-shm-usage')  # Prevents shared memory issues
+        # service = ChromeService(executable_path=chromedriver_path)
+        # driver = webdriver.Chrome(service=service, options=chrome_options)
 
-        #Using Edge on Win11 
-        #edge_options = webdriver.EdgeOptions()
-        #edge_options.add_argument('headless')
-        #driver = webdriver.Edge(options=edge_options)
+        driver_path = "C:/Users/BidA/Documents/PY/WebDrivers/msedgedriver.exe"
+        edge_options = webdriver.EdgeOptions()
+        edge_options.add_argument('headless')
+        service = Service(executable_path=driver_path)
+        driver = webdriver.Edge(service=service, options=edge_options)
         
         driver.get(link)
         sleep(5)
@@ -51,6 +52,8 @@ def check(link, currentQ, lastQ):
 
         p = soup.find_all(string= re.compile(str(lastQ)))
         c = soup.find_all(string= re.compile(currentQ))
+        
+        driver.quit()
 
         if p == [] and lastQ != "nan":
             print("Error")
@@ -80,13 +83,15 @@ def send_email(email_id, xl_data, xl_old_data):
         if xl_data.iloc[i]['Result'] == "Positive" and xl_old_data.iloc[i]['Result'] == "Negative":
             li.append(xl_data.iloc[i]['Name'])
         
-    f= open("pass.txt","r") #pass.txt file should contain two lines - email id and password
-    contents = f.readlines()
-    f.close()
+    # f= open("pass.txt","r") #pass.txt file should contain two lines - email id and password
+    # contents = f.readlines()
+    # f.close()
 
-    username = contents[0].strip()
-    password = contents[1].strip()
+    # username = contents[0].strip()
+    # password = contents[1].strip()
 
+    username = EMAIL
+    password = PASSWORD
 
     s = smtplib.SMTP('smtp.gmail.com', 587) #smtp.gmail.com, 587
     s.starttls()
@@ -109,7 +114,7 @@ def send_email(email_id, xl_data, xl_old_data):
 
     msg.set_content(message)
     print(message)
-    #s.send_message(msg)            # Uncheck this before using this to email contacts
+    s.send_message(msg)            # Uncheck this before using this to email contacts
     s.quit()
 
 
