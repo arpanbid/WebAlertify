@@ -2,6 +2,7 @@ import pandas as pd
 import csv
 from flask import Flask, render_template, redirect, url_for, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
+from config import *
 
 with open('path.txt', 'r') as file:
     path = file.readline().strip()
@@ -114,8 +115,10 @@ def index():
 
 @app.route('/checklink')
 def checklink():
-    from main import check
-    result = check(link, currentQ, lastQ)
+    from main import check, init_driver
+    driver = init_driver(WHICHDRIVER)    
+    result = check(link, currentQ, lastQ, driver)
+    driver.quit()
     return "Result: " + result 
 
 
