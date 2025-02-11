@@ -4,8 +4,7 @@ from flask import Flask, render_template, redirect, url_for, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from config import *
 
-with open('path.txt', 'r') as file:
-    path = file.readline().strip()
+path = INPUT_PATH
 
 xl_data = None
 
