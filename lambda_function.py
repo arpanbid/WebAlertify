@@ -36,21 +36,13 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
         if username == USERNAME and hashlib.sha256(password.encode()).hexdigest() == PASSWORD_HASH:
-            resp = make_response(redirect("/dev/dashboard/"))
+            resp = make_response(redirect("/dev/dashboard"))
             resp.set_cookie("auth", PASSWORD_HASH)
             return resp
         return "Invalid credentials", 401
 
     # HTML form for login
     return render_template("login.html")
-    return render_template_string("""
-    <h2>Login</h2>
-    <form method="POST">
-        <label>Username: <input type="text" name="username"></label><br>
-        <label>Password: <input type="password" name="password"></label><br>
-        <button type="submit">Login</button>
-    </form>
-    """)
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
