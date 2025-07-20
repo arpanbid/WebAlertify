@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome to Our App</title>
+        <title>Welcome to WebAlertify</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -76,10 +76,10 @@
     
 <body>
     <div class="container">
-        <a href="/dashboard">
+        <a href="/dev/dashboard">
             <img src="{{ url_for('static', filename='img/WA.png') }}" alt="App Logo" class="logo" style="width: auto; height: auto;">
         </a>
-        <form method="POST" action="/login">
+        <form method="POST" action="/dev/login">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -93,7 +93,7 @@
             </div>
         </form>
         <a>Not Registered?</a> 
-        <a href="/signup">Sign Up</a> 
+        <a href="/dev/signup">Sign Up</a> 
 
     </div>
 </body>

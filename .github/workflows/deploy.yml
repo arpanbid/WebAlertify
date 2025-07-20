@@ -1,0 +1,38 @@
+name: Deploy Lambda Function (Code Only)
+
+on:
+  push:
+    # Deploy whenever the lambda branch is updated.
+    # Change to `main` or another branch if you prefer.
+    branches:
+      - lambda
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    #Check out the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    #Zip everything except the excluded files/folders
+    - name: Zip Lambda code
+      run: |
+        zip -r lambda.zip . \
+          -x "__pycache__/*" "*/__pycache__/*" \
+             ".env" "*/.env" \
+             "env/*" \
+             "logs/*" \
+             ".git/*" \
+             ".github/*"
+
+    #Deploy the zip to AWS Lambda
+    - name: Deploy to AWS Lambda
+      uses: appleboy/lambda-action@master
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ secrets.AWS_REGION }}
+        function_name: ${{ secrets.LAMBDA_FUNCTION_NAME }}
+        zip_file: lambda.zip
