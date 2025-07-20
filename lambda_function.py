@@ -132,6 +132,10 @@ def runnemail():
 def testurl():
     return "Test Success."
 
+@app.route('/steps')
+def steps():
+    return render_template('steps.html')
+
 @app.route("/logout")
 def logout():
     resp = make_response(redirect("/dev/login"))
