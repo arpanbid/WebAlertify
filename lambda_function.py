@@ -3,6 +3,7 @@ import awsgi
 import boto3
 from flask import Flask, render_template, redirect, url_for, request, render_template_string, make_response
 import hashlib
+import os
 
 
 xl_data = None
@@ -19,8 +20,9 @@ app = Flask(__name__)
 
 
 # Dummy credentials
-USERNAME = "admin"
-PASSWORD_HASH = hashlib.sha256("password123".encode()).hexdigest()
+password = os.environ.get("login_password")
+USERNAME = os.environ.get("login_id")
+PASSWORD_HASH = hashlib.sha256(password.encode()).hexdigest()
 
 def is_logged_in(request):
     return request.cookies.get("auth") == PASSWORD_HASH
